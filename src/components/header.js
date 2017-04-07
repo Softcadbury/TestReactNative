@@ -11,13 +11,11 @@ const Header = (props) => {
 
 const styles = {
     viewStyle: {
-        backgroundColor: '#2d862d',
+        borderBottomWidth: 1,
+        borderColor: '#ddd',
         justifyContent: 'center',
         alignItems: 'center',
-        height: 60,
-        shadowColor: 'black',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
+        height: 50,
         elevation: 2,
         position: 'relative'
     },
