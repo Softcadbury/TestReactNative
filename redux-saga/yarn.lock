@@ -4225,7 +4225,7 @@ react-proxy@^1.1.7:
     lodash "^4.6.1"
     react-deep-force-update "^1.0.0"
 
-react-redux@^5.0.2:
+react-redux@^5.0.2, react-redux@^5.0.5:
   version "5.0.5"
   resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/react-redux/-/react-redux-5.0.5.tgz#f8e8c7b239422576e52d6b7db06439469be9846a"
   dependencies:
@@ -4325,7 +4325,11 @@ redux-logger@^2.7.4:
   dependencies:
     deep-diff "0.3.4"
 
-redux@^3.6.0:
+redux-saga@^0.15.5:
+  version "0.15.5"
+  resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/redux-saga/-/redux-saga-0.15.5.tgz#1fca7e514b00cfbb7c3453ed870f253749635f0f"
+
+redux@^3.6.0, redux@^3.7.2:
   version "3.7.2"
   resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
   dependencies:
@@ -4499,13 +4503,7 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@^2.2.8, rimraf@~2.4.0:
-  version "2.4.5"
-  resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/rimraf/-/rimraf-2.4.5.tgz#ee710ce5d93a8fdb856fb5ea8ff0e2d75934b2da"
-  dependencies:
-    glob "^6.0.1"
-
-rimraf@^2.5.4, rimraf@^2.6.1:
+rimraf@2, rimraf@^2.2.8, rimraf@^2.5.4, rimraf@^2.6.1:
   version "2.6.1"
   resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/rimraf/-/rimraf-2.6.1.tgz#c2338ec643df7a1b7fe5c54fa86f57428a55f33d"
   dependencies:
@@ -4514,6 +4512,12 @@ rimraf@^2.5.4, rimraf@^2.6.1:
 rimraf@~2.2.6:
   version "2.2.8"
   resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
+
+rimraf@~2.4.0:
+  version "2.4.5"
+  resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/rimraf/-/rimraf-2.4.5.tgz#ee710ce5d93a8fdb856fb5ea8ff0e2d75934b2da"
+  dependencies:
+    glob "^6.0.1"
 
 rndm@1.2.0:
   version "1.2.0"
@@ -5250,7 +5254,7 @@ webidl-conversions@^4.0.0:
   version "4.0.1"
   resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/webidl-conversions/-/webidl-conversions-4.0.1.tgz#8015a17ab83e7e1b311638486ace81da6ce206a0"
 
-"websql@github:expo/node-websql#18.0.0":
+websql@expo/node-websql#18.0.0:
   version "0.4.4"
   resolved "https://codeload.github.com/expo/node-websql/tar.gz/e364fa65146a9e2157a19e5c719e7702c2b6b87a"
   dependencies:
@@ -5266,11 +5270,7 @@ whatwg-encoding@^1.0.1:
   dependencies:
     iconv-lite "0.4.13"
 
-whatwg-fetch@>=0.10.0:
-  version "2.0.3"
-  resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/whatwg-fetch/-/whatwg-fetch-2.0.3.tgz#9c84ec2dcf68187ff00bc64e1274b442176e1c84"
-
-whatwg-fetch@^1.0.0:
+whatwg-fetch@>=0.10.0, whatwg-fetch@^1.0.0:
   version "1.1.1"
   resolved "http://srv-rd-packages.talentsoft.com/npm/TalentsoftNpm/whatwg-fetch/-/whatwg-fetch-1.1.1.tgz#ac3c9d39f320c6dce5339969d054ef43dd333319"
 
