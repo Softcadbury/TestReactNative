@@ -8,26 +8,47 @@ import { Text, View, ScrollView } from 'react-native';
 // import sagas from './src/sagas';
 import Card from './src/components/Card';
 import CardSection from './src/components/CardSection';
+import Button from './src/components/Button';
 
 export default class App extends React.Component {
     state = {
         users: [],
         isLoading: false,
-        currentPage: 1
+        currentPage: 0
+    }
+
+    fetchUsers() {
+        if (this.state.isLoading) {
+            return;
+        }
+
+        this.setState({
+            isLoading: true,
+            currentPage: this.state.currentPage + 1
+        }, () => {
+
+            console.log(this.state.isLoading)
+            console.log(this.state.currentPage)
+
+            fetch('https://reqres.in/api/users?page=' + this.state.currentPage)
+                .then((response) => response.json())
+                .then((responseData) => {
+                    this.setState({
+                        isLoading: false,
+                        users: [
+                            ...this.state.users,
+                            ...responseData.data,
+                            ...responseData.data,
+                            ...responseData.data,
+                            ...responseData.data
+                        ]
+                    });
+                });
+        });
     }
 
     componentWillMount() {
-        fetch('https://reqres.in/api/users?page=2')
-            .then((response) => response.json())
-            .then((responseData) => {
-                console.log('hello')
-                this.setState({
-                    users: [
-                        ...this.state.users,
-                        ...responseData.data,
-                        ...responseData.data],
-                });
-            });
+        this.fetchUsers();
     }
 
     renderUsers() {
@@ -46,6 +67,7 @@ export default class App extends React.Component {
     render() {
         return (
             <View style={style.main}>
+                <Button style={style.button} onPress={this.fetchUsers.bind(this)}>Load</Button>
                 <ScrollView>
                     {this.renderUsers()}
                 </ScrollView>
@@ -72,5 +94,8 @@ const style = {
     main: {
         flex: 1,
         paddingTop: 20
+    },
+    button: {
+        height: 30
     }
 }
