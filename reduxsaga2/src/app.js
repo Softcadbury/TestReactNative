@@ -1,47 +1,37 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
+import { Text, View, ScrollView, Image, Dimensions } from 'react-native';
 
 import Card from './components/Card';
 import CardSection from './components/CardSection';
-import Button from './components/Button';
 
 export default class App extends Component {
     state = {
         users: [],
+        currentPage: 0,
         isLoading: false,
-        currentPage: 0
+        areAllLoaded: false
     };
 
     fetchUsers() {
-        if (this.state.isLoading) {
+        if (this.state.isLoading || this.state.areAllLoaded) {
             return;
         }
 
         this.setState(
             {
-                isLoading: true,
-                currentPage: this.state.currentPage + 1
+                currentPage: this.state.currentPage + 1,
+                isLoading: true
             },
-            () => {
-                console.log(this.state.isLoading);
-                console.log(this.state.currentPage);
+            _ => {
+                fetch('https://reqres.in/api/users?page=' + this.state.currentPage).then(response => response.json()).then(responseData => {
+                    console.log( this.state.currentPage , responseData.total_pages);
 
-                fetch(
-                    'https://reqres.in/api/users?page=' + this.state.currentPage
-                )
-                    .then(response => response.json())
-                    .then(responseData => {
-                        this.setState({
-                            isLoading: false,
-                            users: [
-                                ...this.state.users,
-                                ...responseData.data,
-                                ...responseData.data,
-                                ...responseData.data,
-                                ...responseData.data
-                            ]
-                        });
+                    this.setState({
+                        users: [...this.state.users, ...responseData.data],
+                        isLoading: false,
+                        areAllLoaded: this.state.currentPage == responseData.total_pages
                     });
+                });
             }
         );
     }
@@ -50,16 +40,25 @@ export default class App extends Component {
         this.fetchUsers();
     }
 
+    onScroll(e) {
+        var windowHeight = Dimensions.get('window').height;
+        var height = e.nativeEvent.contentSize.height;
+        var offset = e.nativeEvent.contentOffset.y;
+        if (windowHeight + offset >= height) {
+            this.fetchUsers();
+        }
+    }
+
     renderUsers() {
         return this.state.users.map(user =>
-            <Card>
+            <Card key={user.id}>
+                <CardSection>
+                    <Image style={style.image} source={{ uri: user.avatar }} />
+                </CardSection>
                 <CardSection>
                     <View key={user.id}>
-                        <Text>
-                            {user.first_name}
-                        </Text>
-                        <Text>
-                            {user.last_name}
+                        <Text style={style.name}>
+                            {user.first_name} {user.last_name}
                         </Text>
                     </View>
                 </CardSection>
@@ -70,13 +69,7 @@ export default class App extends Component {
     render() {
         return (
             <View style={style.main}>
-                <Button
-                    style={style.button}
-                    onPress={this.fetchUsers.bind(this)}
-                >
-                    Load
-                </Button>
-                <ScrollView>
+                <ScrollView onScroll={this.onScroll.bind(this)}>
                     {this.renderUsers()}
                 </ScrollView>
             </View>
@@ -87,9 +80,15 @@ export default class App extends Component {
 const style = {
     main: {
         flex: 1,
-        paddingTop: 20
+        paddingBottom: 10
     },
-    button: {
-        height: 30
+    image: {
+        height: 200,
+        flex: 1,
+        width: null
+    },
+    name: {
+        margin: 10,
+        fontSize: 20
     }
 };
