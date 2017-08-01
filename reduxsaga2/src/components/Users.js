@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { Text, ScrollView, Image, Dimensions } from 'react-native';
+import { connect } from 'react-redux';
 
 import Card from './Card';
 import CardSection from './CardSection';
 
-export default class Users extends Component {
+class Users extends Component {
     state = {
         users: [],
         currentPage: 0,
@@ -36,6 +37,7 @@ export default class Users extends Component {
 
     componentWillMount() {
         this.fetchUsers();
+        console.log(this.props.users.test);
     }
 
     onScroll(e) {
@@ -83,3 +85,9 @@ const style = {
         fontSize: 20
     }
 };
+
+const mapStateToProps = state => {
+    return { users: state.users };
+};
+
+export default connect(mapStateToProps)(Users);
