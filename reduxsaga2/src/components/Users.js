@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, ScrollView, Image, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 
+import { loadUsers } from '../actions'
 import Card from './Card';
 import CardSection from './CardSection';
 
@@ -17,6 +18,8 @@ class Users extends Component {
         if (this.state.isLoading || this.state.areAllLoaded) {
             return;
         }
+
+        this.props.loadUsers();
 
         this.setState(
             {
@@ -37,7 +40,6 @@ class Users extends Component {
 
     componentWillMount() {
         this.fetchUsers();
-        console.log(this.props.users.test);
     }
 
     onScroll(e) {
@@ -90,4 +92,4 @@ const mapStateToProps = state => {
     return { users: state.users };
 };
 
-export default connect(mapStateToProps)(Users);
+export default connect(mapStateToProps, { loadUsers })(Users);
