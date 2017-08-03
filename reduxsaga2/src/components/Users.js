@@ -2,40 +2,17 @@ import React, { Component } from 'react';
 import { Text, ScrollView, Image, Dimensions } from 'react-native';
 import { connect } from 'react-redux';
 
-import { loadUsers } from '../actions'
+import { loadUsers } from '../actions';
 import Card from './Card';
 import CardSection from './CardSection';
 
 class Users extends Component {
-    state = {
-        users: [],
-        currentPage: 0,
-        isLoading: false,
-        areAllLoaded: false
-    };
-
     fetchUsers() {
-        if (this.state.isLoading || this.state.areAllLoaded) {
+        if (this.props.isLoading || this.props.areAllLoaded) {
             return;
         }
 
-        this.props.loadUsers();
-
-        this.setState(
-            {
-                currentPage: this.state.currentPage + 1,
-                isLoading: true
-            },
-            _ => {
-                fetch('https://reqres.in/api/users?page=' + this.state.currentPage).then(response => response.json()).then(responseData => {
-                    this.setState({
-                        users: [...this.state.users, ...responseData.data],
-                        isLoading: false,
-                        areAllLoaded: this.state.currentPage == responseData.total_pages
-                    });
-                });
-            }
-        );
+        this.props.loadUsers(this.props.currentPage);
     }
 
     componentWillMount() {
@@ -53,8 +30,8 @@ class Users extends Component {
     }
 
     renderUsers() {
-        return this.state.users.map(user =>
-            <Card key={user.id}>
+        return this.props.users.map(user =>
+            <Card key={user.id + user.first_name}>
                 <CardSection>
                     <Image style={style.image} source={{ uri: user.avatar }} />
                 </CardSection>
@@ -89,7 +66,8 @@ const style = {
 };
 
 const mapStateToProps = state => {
-    return { users: state.users };
+    const { users, currentPage, isLoading, areAllLoaded } = state.usersReducer;
+    return { users, currentPage, isLoading, areAllLoaded };
 };
 
 export default connect(mapStateToProps, { loadUsers })(Users);

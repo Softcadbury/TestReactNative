@@ -1,25 +1,21 @@
-import { call, put, takeEvery, takeLatest } from 'redux-saga/effects'
+import { call, put, takeEvery } from 'redux-saga/effects';
 
-import { LOAD_USERS } from '../actions/types';
+import { LOAD_USERS, USERS_LOADED } from '../actions/types';
 
-// worker Saga: will be fired on USER_FETCH_REQUESTED actions
+function fetchUserAPI(currentPage) {
+    return fetch('https://reqres.in/api/users?page=' + currentPage).then(response => response.json());
+}
+
 function* fetchUser(action) {
-//    try {
-//       const user = yield call(Api.fetchUser, action.payload.userId);
-//       yield put({type: "USER_FETCH_SUCCEEDED", user: user});
-//    } catch (e) {
-//       yield put({type: "USER_FETCH_FAILED", message: e.message});
-//    }
+    const response = yield call(fetchUserAPI, action.currentPage);
 
-console.log('wow')
+    yield put({
+        type: USERS_LOADED,
+        users: response.data,
+        areAllLoaded: action.currentPage == response.total_pages
+    });
 }
 
-/*
-  Starts fetchUser on each dispatched `USER_FETCH_REQUESTED` action.
-  Allows concurrent fetches of user.
-*/
-function* sagas() {
-  //yield takeEvery(LOAD_USERS, fetchUser);
+export function* sagas() {
+    yield takeEvery(LOAD_USERS, fetchUser);
 }
-
-export default sagas;

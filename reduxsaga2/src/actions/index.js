@@ -1,8 +1,8 @@
 import { LOAD_USERS } from './types';
 
-export const loadUsers = _ => {
+export const loadUsers = currentPage => {
     return {
         type: LOAD_USERS,
-        payload: 'test'
+        currentPage: currentPage
     };
 };
