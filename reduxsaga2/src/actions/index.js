@@ -1,8 +1,5 @@
-import { LOAD_USERS } from './types';
+import { loadUsers } from './UserAction';
 
-export const loadUsers = currentPage => {
-    return {
-        type: LOAD_USERS,
-        currentPage: currentPage
-    };
+export default {
+    loadUsers
 };
