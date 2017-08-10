@@ -66,7 +66,7 @@ const style = {
 };
 
 const mapStateToProps = state => {
-    const { users, currentPage, isLoading, areAllLoaded } = state.usersReducer;
+    const { users, currentPage, isLoading, areAllLoaded } = state.userReducer;
     return { users, currentPage, isLoading, areAllLoaded };
 };
 
